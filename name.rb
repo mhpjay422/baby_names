@@ -3,10 +3,10 @@ require 'pry'
 
 class Name
   attr_reader :year, :bio_gender, :ethnicity, :name, :count, :rank
-  @@filename = 'csv_exploration_lesson/popular_baby_names.csv'
+  @@filename = './popular_baby_names.csv'
 
   def initialize(data)
-    require "pry"; binding.pry
+    # require "pry"; binding.pry
     # @year = 
     # @bio_gender = 
     # @ethnicity = 
@@ -18,10 +18,10 @@ class Name
   def self.find_by_name(name)
     rows = CSV.read(@@filename, headers: true)
     result = []
-    name = Name.new(rows.first)
-    # new code goes here
-    
+    rows.each {|row| 
+      result << Name.new(row) if row["Child's First Name"].downcase == name.downcase}
     result
+    require "pry"; binding.pry
   end
 end
 
