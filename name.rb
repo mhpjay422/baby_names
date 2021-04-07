@@ -31,15 +31,30 @@ class Name
 
   def self.where(details)
     rows = CSV.read(@@filename, headers: true)
-    result = []
-    format_details_to_csv = details.keys[0].to_s.capitalize
-    if details.keys[0].to_s.to_i == 0
-      detail_value = details.values[0].upcase
-    else
-      detail_value = details.values[0]
+    i = 0
+    until i == details.length
+      format_details_to_csv = details.keys[i].to_s.capitalize
+      if details.keys[i].to_s.to_i == 0
+        detail_value = details.values[i].upcase
+      else
+        detail_value = details.values[i]
+      end
+      rows = rows.select do |row| 
+        case format_details_to_csv
+        when "Year"
+          format_details_to_csv = "Year of Birth"
+        when "Name"
+          format_details_to_csv = "Child's First Name"
+        end
+        if row[format_details_to_csv].to_i == 0
+          row[format_details_to_csv].downcase == detail_value.downcase
+        else 
+          row[format_details_to_csv] == detail_value
+        end
+      end
+      i += 1
     end
-    rows.each {|row| result << Name.new(row) if row[format_details_to_csv] == detail_value}
-    result
+    rows
   end
 
   def self.order(hashdata)
@@ -80,3 +95,5 @@ puts Name.order( { year: :asc })[-1]
 
 puts Name.order( { name: :desc }).first
 puts Name.order( { name: :desc })[-1]
+
+puts Name.where({ name: "GERALDINE", rank: "75" })
