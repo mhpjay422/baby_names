@@ -53,6 +53,7 @@ class Name
       key = "Child's First Name"
     end
 
+    return rows.sort_by {|row| row[key]}.reverse! if hashdata.values.first == :desc || :descending
     rows.sort_by {|row| row[key]}
   end
 end
