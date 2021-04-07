@@ -21,8 +21,14 @@ class Name
     rows.each {|row| 
       result << Name.new(row) if row["Child's First Name"].downcase == name.downcase}
     result
-    require "pry"; binding.pry
+    # require "pry"; binding.pry
   end
 end
 
-Name.find_by_name("jason")
+puts Name.find_by_name("jason").length 
+puts Name.find_by_name("Ian").length 
+puts Name.find_by_name("MEGAN").length 
+puts Name.find_by_name("Sal").length 
+puts Name.find_by_name("Omar").length 
+puts Name.find_by_name("Riley").length 
+puts Name.find_by_name("HUNTER").length 
